@@ -2,13 +2,9 @@
 
  My attempt at designing a one port VNA and to learn some RF fundamentals and technqiues. The goal here is to build a simple working S11 (reflection) VNA with minimal RF complexity.
 
-
-
 ## Architecture
 
 The design will be based around the ADL 5960, a VNA frontend that should simplify many design considerations by black-boxing a few components of typical VNAs. Besides the ADL 5960, we will require an ADC stage, digital processing, and an RF source and a clock source.
-
-
 
 ## Repo Structure
 
@@ -24,15 +20,13 @@ The design will be based around the ADL 5960, a VNA frontend that should simplif
 
 - scripts/ Data processing and plotting
 
-
-
 ## Results
 
 Results will be posted here as I progress. 
 
 #### Step 1: Simulating Idealized Components
 
-GOAL: Develop a system-level simulation using idealized components to return $\Gamma$ and $S_{11}$. 
+GOAL: Develop a system-level simulation using idealized components to return $\Gamma$ and $S_{11}$. It will consist of a voltage source ($V_1$), a source impedance ($R_{\text{src}}$) and a DUT ($R_{\text{load}}$). 
 
 [...]
 
@@ -43,14 +37,16 @@ GOAL: Introduce realistic imnperfection into the model, such as finite directivi
 [...]
 
 #### Step 3: Schematic Integration
+
 GOAL: Integrate the ADL5960, ADC, RF source and clocking (could possibly be off-board), and supporting circuitry into a complete schematic.
 
 [...]
 
 #### Step 4: Layout
+
 GOAL: Route and place the PCB. 
 [...]
 
 #### Step 5: Firmware
-GOAL: Implement ADC capture, vector extraction and calibration routines. Generate results. 
 
+GOAL: Implement ADC capture, vector extraction and calibration routines. Generate results. 
