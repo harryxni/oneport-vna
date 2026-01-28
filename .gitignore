@@ -1,0 +1,19 @@
+# KiCad autosave & cache
+**/_autosave-*
+**/*.bak
+**/*.kicad_prl
+**/*.kicad_pcb-bak
+**/*.kicad_sch-bak
+**/*.kicad_pro-bak
+
+# KiCad cache
+**/*-cache.lib
+**/*-cache.kicad_sym
+
+# Fabrication outputs
+fabrication/**
+!fabrication/README.md
+
+# OS noise
+.DS_Store
+Thumbs.db
