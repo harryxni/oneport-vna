@@ -1,0 +1,27 @@
+{
+  "last_sch_text_sim_command": ".ac lin 1 1Meg 1Meg\n\n.control\n    * 1. Define the list using 'set' for the loop\n    set r_list = ( 0 50 100 )\n    \n    foreach val $r_list\n        * Change the resistor value\n        alter r_dut1 = $val\n        \n        * Run the AC analysis\n        run\n        \n        let Vp = v(/port)\n        let Ip = -1 * @r_dut1[i]\n        let Z0 = 50\n        \n        let Vplus  = 0.5 * (Vp + (Z0 * Ip))\n        let Vminus = 0.5 * (Vp - (Z0 * Ip))\n        \n\t\tlet Gamma = Vminus / Vplus\n        echo Resistance: $val ohms | Gamma: {$&Gamma}\n\n    end\n.endc",
+  "tabs": [
+    {
+      "analysis": "AC",
+      "commands": [
+        ".ac lin 1 1Meg 1Meg\n\n.control\n    * 1. Define the list using 'set' for the loop\n    set r_list = ( 0 50 100 )\n    \n    foreach val $r_list\n        * Change the resistor value\n        alter r_dut1 = $val\n        \n        * Run the AC analysis\n        run\n        \n        let Vp = v(/port)\n        let Ip = -1 * @r_dut1[i]\n        let Z0 = 50\n        \n        let Vplus  = 0.5 * (Vp + (Z0 * Ip))\n        let Vminus = 0.5 * (Vp - (Z0 * Ip))\n        \n\t\tlet Gamma = Vminus / Vplus\n        echo Resistance: $val ohms | Gamma: {$&Gamma}\n\n    end\n.endc",
+        ".kicad adjustpaths",
+        ".save all",
+        ".probe alli",
+        ".probe allp"
+      ],
+      "dottedSecondary": false,
+      "margins": {
+        "bottom": 45,
+        "left": 70,
+        "right": 70,
+        "top": 30
+      },
+      "measurements": [],
+      "showGrid": true,
+      "traces": []
+    }
+  ],
+  "user_defined_signals": [],
+  "version": 6
+}

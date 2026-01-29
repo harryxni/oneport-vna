@@ -1,0 +1,21 @@
+.title KiCad schematic
+.ac lin 100 1Meg 100Meg
+.param R_load=50
+
+.control
+	run
+	let Vp = v(/PORT)
+	let Ip = -i(R_DUT1)
+	let Z0 = 50
+
+	let Vplus  = 0.5*(Vp + Z0*Ip)
+	let Vminus = 0.5*(Vp - Z0*Ip)
+
+	let Gamma = Vminus / Vplus
+	plot Gamma
+
+.endc
+R_src1 Net-_R_src1-Pad1_ /port 50
+V1 Net-_R_src1-Pad1_ GND DC 1 SIN( 1 1 10Meg 0 0 0 ) AC 1  
+R_DUT1 GND /port 50
+.end
