@@ -28,7 +28,7 @@ Results will be posted here as I progress.
 
 GOAL: Develop a system-level simulation using idealized components to return $\Gamma$ and $S_{11}$. It will consist of a voltage source (V_1), a source impedance ($R_{\text{src}}$) and a DUT ($R_{\text{load}}$).
 
-![](C:\Users\harry\Documents\UTA\MOLLER_VNA\oneport-vna\simulation\oneport-vna_part1.png) 
+![](simulation/oneport-vna_part1.png) 
 
 
 
