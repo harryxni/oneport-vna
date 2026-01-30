@@ -28,7 +28,7 @@ Results will be posted here as I progress.
 
 GOAL: Develop a system-level simulation using idealized components to return $\Gamma$ and $S_{11}$. It will consist of a voltage source (V_1), a source impedance ($R_{\text{src}}$) and a DUT ($R_{\text{load}}$).
 
-![](simulation/oneport-vna_part1.png) 
+![](simulation/step1/oneport-vna_part1.png) 
 
 The schematic and ngspice directive is shown above. 
 
@@ -42,13 +42,31 @@ Resistance: 50 ohms | Gamma: 0
 Resistance: 100 ohms | Gamma: 0.333333
 ```
 
-
-
 #### Step 2: A more realistic simulation
 
-GOAL: Introduce realistic imperfection into the model, such as finite directivity and source match, using a realistic coupler (ie a Return loss bridge) to model effects of error in measurement. 
+GOAL: Introduce realistic imperfection into the model, such as parasitics and source matching errors and using a realistic coupler (ie a Return loss bridge) to model effects of error in measurement. 
 
-[...]
+##### 2a: VNA with Parasitics
+
+![](simulation/step2_vnaerrors/vna_parasitics.png)
+
+In this model, we've simply introduced a set of parasitics: a series resistor and inductor and a shunt capacitor, with some arbitrary values. We run the simulation in 4 different scenarios: Open, Short, Load match (OSL) and a DUT ($R_{load}=100$  $\Omega$). The OSL measurement provides a calibration for the errors which are introduced via the parasitics. These are then calculated and used to correct for the DUT measurement.
+
+The exact calculations and data processing are done in [this notebook](simulation/step2_vnaerrors/). The results of the OSL measurements are shown here:
+
+![](simulation/step2_vnaerrors/OSL_parasitics.png)
+
+Using these measurements in comparison to the expected values, we calculate out the error terms ($E_{dl}$, $E_{sf}$ and $E_{rf}$) and use them for the correct $\Gamma_{DUT}$ measurement:
+
+$\Gamma= \frac{\Gamma_m -E_{dl}}{E_{rf} + E_{sf}(\Gamma_m - E_{dl})}$
+
+The effects of this correction are shown below and compared to the expected value. 
+
+![](simulation/step2_vnaerrors/correction_parasitics.png)
+
+##### 2b: VNA with Directional Coupling
+
+
 
 #### Step 3: Schematic Integration
 
