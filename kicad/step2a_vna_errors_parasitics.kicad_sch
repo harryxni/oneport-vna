@@ -5,6 +5,145 @@
 	(uuid "5f562447-411f-4628-9ea8-70f511d45919")
 	(paper "A4")
 	(lib_symbols
+		(symbol "Device:C"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "C"
+				(at 0.635 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "C"
+				(at 0.635 -2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0.9652 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Unpolarized capacitor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "cap capacitor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "C_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "C_0_1"
+				(polyline
+					(pts
+						(xy -2.032 0.762) (xy 2.032 0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.032 -0.762) (xy 2.032 -0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "C_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 2.794)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 2.794)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Device:L"
 			(pin_numbers
 				(hide yes)
@@ -581,9 +720,31 @@
 			(embedded_fonts no)
 		)
 	)
-	(text ".ac lin 1 1Meg 1Meg\n\n.control\n    * 1. Define the list using 'set' for the loop\n    set r_list = ( 0 50 100 )\n    \n    foreach val $r_list\n        * Change the resistor value\n        alter r_dut1 = $val\n        \n        * Run the AC analysis\n        run\n        \n        let Vp = v(/port)\n        let Ip = -1 * @r_dut1[i]\n        let Z0 = 50\n        \n        let Vplus  = 0.5 * (Vp + (Z0 * Ip))\n        let Vminus = 0.5 * (Vp - (Z0 * Ip))\n        \n		let Gamma = Vminus / Vplus\n        echo Resistance: $val ohms | Gamma: {$&Gamma}\n\n    end\n.endc"
+	(rectangle
+		(start 92.71 74.93)
+		(end 118.11 102.87)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid dae1ae81-f68b-4946-930e-986ec54568e0)
+	)
+	(text "Parasitics Model\n"
+		(exclude_from_sim yes)
+		(at 105.41 73.914 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "b5ec0c91-9d2f-4c39-bb5d-132c6b6e95f1")
+	)
+	(text ".ac lin 50 1Meg 1G\n\n.control\n    * SHORT \n    alter r_dut1 = 0.1m\n    run\n    let g_short = (v(/port) - 50*(-1*@r_dut1[i])) / (v(/port) + 50*(-1*@r_dut1[i]))\n    wrdata ../simulation/step2_vnaerrors/parasitics_data/cal_short.txt g_short\n    \n    * OPEN \n    alter r_dut1 = 1T\n    run\n    let g_open = (v(/port) - 50*(-1*@r_dut1[i])) / (v(/port) + 50*(-1*@r_dut1[i]))\n    wrdata ../simulation/step2_vnaerrors/parasitics_data/cal_open.txt g_open\n    \n    * LOAD\n    alter r_dut1 = 50\n    run\n    let g_load = (v(/port) - 50*(-1*@r_dut1[i])) / (v(/port) + 50*(-1*@r_dut1[i]))\n    wrdata ../simulation/step2_vnaerrors/parasitics_data/cal_load.txt g_load\n    \n    * DUT (100 ohms)\n    alter r_dut1 = 100\n    run\n    let g_dut = (v(/port) - 50*(-1*@r_dut1[i])) / (v(/port) + 50*(-1*@r_dut1[i]))\n    wrdata ../simulation/step2_vnaerrors/parasitics_data/dut_raw.txt g_dut\n.endc"
 		(exclude_from_sim no)
-		(at 159.766 102.616 0)
+		(at 134.366 88.138 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -592,15 +753,11 @@
 		)
 		(uuid "e0498285-b6ff-4ba5-bc29-32477d652f33")
 	)
-	(wire
-		(pts
-			(xy 101.6 87.63) (xy 107.95 87.63)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "548c1df7-7835-44f0-9f14-c7fbe05f6e3d")
+	(junction
+		(at 115.57 87.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9952ceeb-cfc9-453d-b0ed-b71b57f1b6c6")
 	)
 	(wire
 		(pts
@@ -632,8 +789,28 @@
 		)
 		(uuid "834fccae-7010-40e2-8a91-0f97de52340f")
 	)
+	(wire
+		(pts
+			(xy 101.6 87.63) (xy 105.41 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b1557de0-5040-4f6a-a5c5-cb84f606e38e")
+	)
+	(wire
+		(pts
+			(xy 113.03 87.63) (xy 115.57 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d9ca18a7-118c-4b8c-b89a-ae8279b4afc2")
+	)
 	(label "port"
-		(at 125.73 90.17 0)
+		(at 90.17 87.63 90)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -652,7 +829,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "38b0b22f-5251-446e-b63e-36a67fbad360")
-		(property "Reference" "R_src2"
+		(property "Reference" "R_p1"
 			(at 97.79 81.28 90)
 			(effects
 				(font
@@ -660,7 +837,7 @@
 				)
 			)
 		)
-		(property "Value" "50"
+		(property "Value" "0.05"
 			(at 97.79 83.82 90)
 			(effects
 				(font
@@ -704,7 +881,143 @@
 		(instances
 			(project "oneport-vna"
 				(path "/5f562447-411f-4628-9ea8-70f511d45919"
-					(reference "R_src2")
+					(reference "R_p1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 115.57 91.44 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "528d9697-185c-457a-b66b-ef4d89262962")
+		(property "Reference" "C_p1"
+			(at 119.38 90.1699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "2p"
+			(at 119.38 92.7099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 116.5352 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 115.57 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 115.57 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "8804e580-c908-4eed-bdb4-475783a785e2")
+		)
+		(pin "2"
+			(uuid "bb01f5e0-9352-44cc-bf42-cda71197fb14")
+		)
+		(instances
+			(project "step2_vna_with_errors"
+				(path "/5f562447-411f-4628-9ea8-70f511d45919"
+					(reference "C_p1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 115.57 95.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "5b0da890-798e-4582-9da5-9ea532f6a27e")
+		(property "Reference" "#PWR03"
+			(at 115.57 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 115.57 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 115.57 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 115.57 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 115.57 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d5eb84f6-f18b-40fc-9dd8-d050125a07fc")
+		)
+		(instances
+			(project "step2_vna_with_errors"
+				(path "/5f562447-411f-4628-9ea8-70f511d45919"
+					(reference "#PWR03")
 					(unit 1)
 				)
 			)
@@ -778,7 +1091,7 @@
 	)
 	(symbol
 		(lib_id "Device:L")
-		(at 111.76 87.63 90)
+		(at 109.22 87.63 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -786,16 +1099,16 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "aa7c3c2b-6297-4dbd-9585-15c1c30dbf24")
-		(property "Reference" "L1"
-			(at 111.76 82.55 90)
+		(property "Reference" "L_p1"
+			(at 109.22 82.55 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "L"
-			(at 111.76 85.09 90)
+		(property "Value" "5n"
+			(at 109.22 85.09 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -803,7 +1116,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 111.76 87.63 0)
+			(at 109.22 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -812,7 +1125,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 111.76 87.63 0)
+			(at 109.22 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -821,7 +1134,7 @@
 			)
 		)
 		(property "Description" "Inductor"
-			(at 111.76 87.63 0)
+			(at 109.22 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -838,7 +1151,7 @@
 		(instances
 			(project ""
 				(path "/5f562447-411f-4628-9ea8-70f511d45919"
-					(reference "L1")
+					(reference "L_p1")
 					(unit 1)
 				)
 			)
@@ -917,15 +1230,15 @@
 	(symbol
 		(lib_id "Simulation_SPICE:VSIN")
 		(at 81.28 100.33 0)
+		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "dd6dc635-1a8c-49a0-93c1-d739e16645e0")
 		(property "Reference" "V1"
-			(at 85.09 97.6601 0)
+			(at 77.47 97.6601 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -934,7 +1247,7 @@
 			)
 		)
 		(property "Value" "VSIN"
-			(at 85.09 100.2001 0)
+			(at 77.47 100.2001 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -979,7 +1292,7 @@
 			)
 		)
 		(property "Sim.Params" "dc=1 ampl=1 f=10Meg ac=1"
-			(at 85.09 102.7401 0)
+			(at 77.47 102.7401 0)
 			(effects
 				(font
 					(size 1.27 1.27)

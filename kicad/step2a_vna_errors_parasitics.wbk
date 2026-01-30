@@ -1,0 +1,27 @@
+{
+  "last_sch_text_sim_command": ".ac lin 50 1Meg 1G\n\n.control\n    * SHORT \n    alter r_dut1 = 0.1m\n    run\n    let g_short = (v(/port) - 50*(-1*@r_dut1[i])) / (v(/port) + 50*(-1*@r_dut1[i]))\n    wrdata ../simulation/step2_vnaerrors/parasitics_data/cal_short.txt g_short\n    \n    * OPEN \n    alter r_dut1 = 1T\n    run\n    let g_open = (v(/port) - 50*(-1*@r_dut1[i])) / (v(/port) + 50*(-1*@r_dut1[i]))\n    wrdata ../simulation/step2_vnaerrors/parasitics_data/cal_open.txt g_open\n    \n    * LOAD\n    alter r_dut1 = 50\n    run\n    let g_load = (v(/port) - 50*(-1*@r_dut1[i])) / (v(/port) + 50*(-1*@r_dut1[i]))\n    wrdata ../simulation/step2_vnaerrors/parasitics_data/cal_load.txt g_load\n    \n    * DUT (100 ohms)\n    alter r_dut1 = 100\n    run\n    let g_dut = (v(/port) - 50*(-1*@r_dut1[i])) / (v(/port) + 50*(-1*@r_dut1[i]))\n    wrdata ../simulation/step2_vnaerrors/parasitics_data/dut_raw.txt g_dut\n.endc",
+  "tabs": [
+    {
+      "analysis": "AC",
+      "commands": [
+        ".ac lin 50 1Meg 1G\n\n.control\n    * SHORT \n    alter r_dut1 = 0.1m\n    run\n    let g_short = (v(/port) - 50*(-1*@r_dut1[i])) / (v(/port) + 50*(-1*@r_dut1[i]))\n    wrdata ../simulation/step2_vnaerrors/parasitics_data/cal_short.txt g_short\n    \n    * OPEN \n    alter r_dut1 = 1T\n    run\n    let g_open = (v(/port) - 50*(-1*@r_dut1[i])) / (v(/port) + 50*(-1*@r_dut1[i]))\n    wrdata ../simulation/step2_vnaerrors/parasitics_data/cal_open.txt g_open\n    \n    * LOAD\n    alter r_dut1 = 50\n    run\n    let g_load = (v(/port) - 50*(-1*@r_dut1[i])) / (v(/port) + 50*(-1*@r_dut1[i]))\n    wrdata ../simulation/step2_vnaerrors/parasitics_data/cal_load.txt g_load\n    \n    * DUT (100 ohms)\n    alter r_dut1 = 100\n    run\n    let g_dut = (v(/port) - 50*(-1*@r_dut1[i])) / (v(/port) + 50*(-1*@r_dut1[i]))\n    wrdata ../simulation/step2_vnaerrors/parasitics_data/dut_raw.txt g_dut\n.endc",
+        ".kicad adjustpaths",
+        ".save all",
+        ".probe alli",
+        ".probe allp"
+      ],
+      "dottedSecondary": false,
+      "margins": {
+        "bottom": 45,
+        "left": 70,
+        "right": 70,
+        "top": 30
+      },
+      "measurements": [],
+      "showGrid": true,
+      "traces": []
+    }
+  ],
+  "user_defined_signals": [],
+  "version": 6
+}
