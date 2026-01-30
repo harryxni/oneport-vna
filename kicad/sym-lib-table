@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "UTA_VNA")(type "KiCad")(uri "${KIPRJMOD}/sym-lib/2026-01-30_20-12-31.kicad_sym")(options "")(descr ""))
+)
