@@ -6,6 +6,12 @@
 
 The design will be based around the ADL 5960, a VNA frontend that should simplify many design considerations by black-boxing a few components of typical VNAs. Besides the ADL 5960, we will require an ADC stage, digital processing, and an RF source and a clock source.
 
+Let's set some target design specs:
+
+* Frequency: 10 MHz - O(1) GHz
+
+* TBD
+
 ## Repo Structure
 
 - kicad/ Schematic and PCB design files
@@ -84,13 +90,35 @@ These results show that we can take the VNA model, "break" it with non-ideal but
 
 ##### 2c: Introducing a transmission line
 
-In the previous step, the DUT and the REF measurements were taken at the same place. 
+In the previous step, the DUT and the REF measurements were taken at the same place.  
 
 #### Step 3: Schematic Integration
 
 GOAL: Integrate the ADL5960, ADC, RF source and clocking (could possibly be off-board), and supporting circuitry into a complete schematic.
 
-[...]
+The board schematic can be divided into a few sections:
+
+##### Power Management
+
+Let's go start with the Analog Devices recommended voltage regulator: [the LT3041.]([LT3045 Datasheet and Product Info | Analog Devices](https://www.analog.com/en/products/lt3041.html)) The required supply voltage is 5 V for the ADL5960 measurement, and 3.3V for the SPI. 
+
+To filter noise, we will add a filter to block noise from the external power source. We will also need to add two filter capacitors at the VCC ports: 4.7 uF and 1 nF. The 1 nF should be placed very close to the ADL5960.
+
+##### RF Source
+
+We'll add an on-board RF source to achieve high O(1) GHz frequencies, but in the case that it breaks/doesn't work. we will add a jumper to an SMA connector to allow for off-board frequencies via an external AFG.
+
+It seems the [ADF4351]([ADF4351 Datasheet and Product Info | Analog Devices](https://www.analog.com/en/products/adf4351.html)) is a decent choise, with a range from 35 MHz to 4.4 GHz. If we want a higher range, we can move up to the [4371]([ADF4371 Datasheet and Product Info | Analog Devices](https://www.analog.com/en/products/adf4371.html)).  It will require a 3.3 V supply. We can AC couple the output to the measurement core. 
+
+We will require an external reference clock.
+
+##### Measurement Core
+
+As mentioned, we will use the ADL5960.
+
+##### I/Q Signal Path
+
+##### Digital Control
 
 #### Step 4: Layout
 
