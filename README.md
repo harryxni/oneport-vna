@@ -66,7 +66,25 @@ The effects of this correction are shown below and compared to the expected valu
 
 ##### 2b: VNA with Directional Coupling
 
+Here, we will simulate the directional coupling found in the ALD5960 by implementing a bridge. I believe it is simplest to just use a wheatstone bridge in this case, since the ALD5960 does a lot of the handling of the RLB measurements. 
 
+I've addded some parasitics in the system as well. 
+
+Below shows the simulated ciruit:
+
+![](simulation/step2_vnaerrors/vna_bridge.png)
+
+The results of the OSL calibration and the corrected DUT are below:
+
+![](simulation/step2_vnaerrors/OSL_bridge.png)
+
+![](simulation/step2_vnaerrors/correction_bridge.png)
+
+These results show that we can take the VNA model, "break" it with non-ideal but realistic parts and then use a calibration + correction to fix it. 
+
+##### 2c: Introducing a transmission line
+
+In the previous step, the DUT and the REF measurements were taken at the same place. 
 
 #### Step 3: Schematic Integration
 
