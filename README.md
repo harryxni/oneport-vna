@@ -102,7 +102,7 @@ The board schematic can be divided into a few sections:
 
 ##### Power Management
 
-Let's work around the the Analog Devices recommended voltage regulator: [the LT3041.]([LT3045 Datasheet and Product Info | Analog Devices](https://www.analog.com/en/products/lt3041.html)) The required supply voltage is 5 V for the ADL5960 measurement, and 3.3V for the SPI. The regulator provides 1 A of current, which should be more than enough. 
+Let's work around the the Analog Devices recommended voltage regulator: [the LT3041.](https://www.analog.com/en/products/lt3041.html) The required supply voltage is 5 V for the ADL5960 measurement, and 3.3V for the SPI. The regulator provides 1 A of current, which should be more than enough. 
 
 First Draft Completed, see [kicad/README.md](kicad/README.md)
 
@@ -110,7 +110,7 @@ First Draft Completed, see [kicad/README.md](kicad/README.md)
 
 We'll add an on-board RF source to achieve high O(1) GHz frequencies, but in the case that it breaks/doesn't work. we will add a jumper to an SMA connector to allow for off-board frequencies via an external AFG.
 
-It seems the [ADF4351]([ADF4351 Datasheet and Product Info | Analog Devices](https://www.analog.com/en/products/adf4351.html)) is a decent choice, with a range from 35 MHz to 4.4 GHz. If we want a higher range, we can move up to the [4371]([ADF4371 Datasheet and Product Info | Analog Devices](https://www.analog.com/en/products/adf4371.html)).  It will require a 3.3 V supply. We can AC couple the output to the measurement core. 
+It seems the [ADF4351](https://www.analog.com/en/products/adf4351.html) is a decent choice, with a range from 35 MHz to 4.4 GHz. If we want a higher range, we can move up to the [4371](https://www.analog.com/en/products/adf4371.html).  It will require a 3.3 V supply. We can AC couple the output to the measurement core. 
 
 We will require an external reference clock. We can pick a Temperature Compensated Crystal Oscillator. 
 
