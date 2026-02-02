@@ -96,11 +96,15 @@ In the previous step, the DUT and the REF measurements were taken at the same pl
 
 GOAL: Integrate the ADL5960, ADC, RF source and clocking (could possibly be off-board), and supporting circuitry into a complete schematic.
 
+Details are in this [README](kicad/README.md). 
+
 The board schematic can be divided into a few sections:
 
 ##### Power Management
 
-Let's go start with the Analog Devices recommended voltage regulator: [the LT3041.]([LT3045 Datasheet and Product Info | Analog Devices](https://www.analog.com/en/products/lt3041.html)) The required supply voltage is 5 V for the ADL5960 measurement, and 3.3V for the SPI. The regulator provides 1 A of current.
+Let's work around the the Analog Devices recommended voltage regulator: [the LT3041.]([LT3045 Datasheet and Product Info | Analog Devices](https://www.analog.com/en/products/lt3041.html)) The required supply voltage is 5 V for the ADL5960 measurement, and 3.3V for the SPI. The regulator provides 1 A of current, which should be more than enough. 
+
+First Draft Completed, see [kicad/README.md](kicad/README.md)
 
 ##### RF Source
 
