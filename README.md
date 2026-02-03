@@ -114,6 +114,12 @@ It seems the [ADF4351](https://www.analog.com/en/products/adf4351.html) is a dec
 
 We will require an external reference clock. We can pick a Temperature Compensated Crystal Oscillator. 
 
+##### Filter Bank
+
+We need a very clean RF stimulus, but typical digital RF sources do not provide sine waves but square waves, which are full of harmonics. We can filter these frequencies out using low pass filters, but since a VNA operates over a large frequency range, a bank of filters is required.
+
+Let's say we start with a LO (local oscillator) frequency for mixing of 2 MHz.
+
 ##### Measurement Core
 
 As mentioned, we will use the ADL5960. 
