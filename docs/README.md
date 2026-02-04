@@ -129,4 +129,27 @@ Ideas:
 
 After some product browsing, a reasonable target is probably a filter bank of 6 for an SP6T. This can be done.
 
+I've browsed the MiniCircuits LPF catalog, so let's build out a 6 filter bank. 
+
+Attempt 2: 
+
+| Band | RF Source Range | LO Divider | Filter     | F3       |
+| ---- | --------------- | ---------- | ---------- | -------- |
+| 1    | 100 - 225 MHz   | 4          | LFCN-225+  | 460 MHz  |
+| 2    | 225-  450 MHz   | 4          | LFCN-490+  | 800 MHz  |
+| 3    | 450 - 1200 MHz  | 2          | LFCN-1200+ | 1.85 GHz |
+| 4    | 1.2 - 3 GHz     | 1          | LFCN-3000+ | 4.5 GHz  |
+| 5    | 3 - 6 GHz       | 1          | LFCN-6000+ | 8.5 GHz  |
+| 6    | 6 - 10 GHz      | 1          | LFCW-103+  | 13+ GHz  |
+
+where F3 is the (-20 db) attenuation point of the filter, and the number in the Filter name refers to the (-1 db) point. 
+
+Another thing I'm realizing we can take advantage of here is the overlap between bands. For example, at 225 MHz, the primary harmonic is at 675, which is well blocked in band 1. However, in band 2, this 675 MHz frequency is not well attenuated. Perhaps, we can increase some amount of overlap in between bands to improve measurements. 
+
+Again, we are trying to take advantage of the fact that with a higher LO division, we get more perfect square waves to mix with, thus removing any of the even harmonics. 
+
+Let's build out a python simulation in a notebook to visualize and see the effects of these filters and also understand the results of the final filtering and I/Q sampling.  
+
+
+
 
